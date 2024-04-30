@@ -1,0 +1,24 @@
+{
+  "name": "svg-demo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@svgdotjs/svg.draggable.js": "^3.0.3",
+    "@svgdotjs/svg.js": "^3.2.0",
+    "@svgdotjs/svg.panzoom.js": "^2.1.2",
+    "@vueuse/core": "^10.9.0",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "vite": "^5.2.8",
+    "vite-plugin-vue-devtools": "^7.0.25"
+  }
+}
