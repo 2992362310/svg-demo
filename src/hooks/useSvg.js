@@ -204,7 +204,6 @@ export function useSvg(gridRef, gridInfo) {
     mind.content = '根节点';
     mind.children = [];
 
-    const width = mind.content.length * fontSize;
     const x = gridInfo.width / 5;
     const y = gridInfo.height / 2;
 
@@ -294,5 +293,6 @@ export function useSvg(gridRef, gridInfo) {
     addSubNode,
     addSameNode,
     removeNode,
+    updatePath,
   };
 }

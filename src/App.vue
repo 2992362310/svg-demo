@@ -1,29 +1,37 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, watchEffect } from 'vue';
 
   import { IconCommunity, IconTooling } from './components/icons';
 
   import { useInitGrid } from './hooks/useInitGrid';
   import { useSvg } from './hooks/useSvg';
 
-  const { gridRef, gridInfo, gridZoom } = useInitGrid();
+  const content = ref('');
 
-  const { curEditNode, addSubNode, addSameNode, removeNode } = useSvg(
-    gridRef,
-    gridInfo
-  );
+  const { gridRef, gridInfo } = useInitGrid();
 
-  const editing = ref(false);
-  const editingText = defineModel();
-  const editX = ref(0);
-  const editY = ref(0);
-  const inputRef = ref(null);
+  const { curEditNode, addSubNode, addSameNode, removeNode, updatePath } =
+    useSvg(gridRef, gridInfo);
+
+  watchEffect(() => {
+    if (curEditNode.value) {
+      content.value = curEditNode.value.content;
+    } else {
+      content.value = '';
+    }
+  });
 
   const handleEnter = () => {
     // console.log("handleEnter");
-    // text.plain(editingText.value);
-    // rect.width(text.length() + fontSize);
-    // editing.value = false;
+    curEditNode.value.content = content.value;
+
+    const text = curEditNode.value.group.text;
+    const rect = curEditNode.value.group.rect;
+
+    text.plain(content.value);
+    rect.width((content.value.length + 1) * 40);
+
+    updatePath();
   };
 </script>
 
@@ -58,25 +66,20 @@
       />
     </svg>
 
-    <input
-      ref="inputRef"
-      type="text"
-      :style="{
-        left: editX + 'px',
-        top: editY + 'px',
-        transform: `scale(${gridZoom})`,
-      }"
-      v-show="editing"
-      @keyup.enter="handleEnter"
-      @blur="handleEnter"
-      v-model="editingText"
-    />
-
-    <ul class="btn-wrap" v-show="curEditNode">
+    <ul class="config-wrap" v-show="curEditNode">
       <IconCommunity />
       <IconTooling />
 
       <li>配置项</li>
+
+      <li>
+        <input
+          type="text"
+          @keyup.enter="handleEnter"
+          @blur="handleEnter"
+          v-model="content"
+        />
+      </li>
 
       <li>
         <button @click="addSubNode">添加子节点</button>
@@ -102,22 +105,7 @@
     height: 100%;
   }
 
-  .svg-demo-wrap > input {
-    position: absolute;
-    transform-origin: 0 0;
-    padding: 10px;
-    border: 1px solid red;
-    background-color: white;
-    font-family: Verdana;
-    font-size: 20px;
-    white-space: pre;
-    word-wrap: normal;
-    overflow: visible;
-    overflow-y: visible;
-    overflow-x: visible;
-  }
-
-  .svg-demo-wrap > .btn-wrap {
+  .svg-demo-wrap > .config-wrap {
     /* list-style: none; */
     padding: 10px 10px 10px 20px;
     position: absolute;
@@ -126,5 +114,19 @@
     width: 200px;
     height: fit-content;
     background: pink;
+  }
+
+  .svg-demo-wrap > .config-wrap input {
+    padding: 4px;
+    width: 160px;
+    border: 1px solid red;
+    background-color: white;
+    font-family: Verdana;
+    /* font-size: 20px; */
+    white-space: pre;
+  }
+
+  .svg-demo-wrap > .config-wrap li {
+    margin-bottom: 4px;
   }
 </style>
