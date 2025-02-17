@@ -13,12 +13,18 @@
     "@svgdotjs/svg.js": "^3.2.0",
     "@svgdotjs/svg.panzoom.js": "^2.1.2",
     "@vueuse/core": "^10.9.0",
+    "localforage": "^1.10.0",
+    "lodash-es": "^4.17.21",
     "vue": "^3.4.21"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "sass": "^1.85.0",
+    "scss": "^0.2.4",
     "vite": "^5.2.8",
-    "vite-plugin-vue-devtools": "^7.0.25"
+    "vite-plugin-vue-devtools": "^7.0.25",
+    "vite-plugin-windicss": "^1.9.4",
+    "windicss": "^3.5.6"
   }
 }
